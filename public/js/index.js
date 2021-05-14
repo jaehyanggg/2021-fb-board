@@ -18,7 +18,14 @@ $('.bt-logout').click(onLogOut);
 /*************** 이벤트 콜백 *****************/
 function onChangeAuth(r) {
 	user = r;
-	console.log(user);
+	if(user) {
+		$('.bt-login').hide();
+		$('.bt-logout').show();
+	}
+	else {
+		$('.bt-login').show();
+		$('.bt-logout').hide();
+	}
 }
 
 function onLogOut() {
