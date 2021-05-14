@@ -8,6 +8,12 @@ html, body {font-family: 'NanumBarunGothic', sans-serif;}
 .wrapper {max-width: 1168px; margin: 0 auto;}
 
 
+/********************** pagination custom *********************/
+.pagination {justify-content: center;}
+.page-item .page-link {padding: .5em .75em .35em .75em;}
+.page-item.active .page-link {background-color: #343a40; border-color: #454d55;}
+
+
 /********************** header-wrapper *********************/
 .header-wrapper {font-family: 'Noto Serif', serif; display: flex;  align-items: center; background-color: #333; color: #fff;}
 .header-wrapper .logo {font-size: 2em; padding-left: .5em;}
@@ -32,6 +38,7 @@ html, body {font-family: 'NanumBarunGothic', sans-serif;}
 
 /********************** list-wrapper *********************/
 .list-wrapper {}
+.list-wrapper table {margin-bottom: 2em;}
 .list-wrapper table > thead > tr > :nth-child(1) {width: 10%}
 .list-wrapper table > thead > tr > :nth-child(3) {width: 15%}
 .list-wrapper table > thead > tr > :nth-child(4) {width: 20%}
