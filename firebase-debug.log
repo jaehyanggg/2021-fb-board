@@ -1,0 +1,38 @@
+[debug] [2021-05-14T02:05:05.735Z] ----------------------------------------------------------------------
+[debug] [2021-05-14T02:05:05.738Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\hiimj\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js serve
+[debug] [2021-05-14T02:05:05.739Z] CLI Version:   9.10.1
+[debug] [2021-05-14T02:05:05.740Z] Platform:      win32
+[debug] [2021-05-14T02:05:05.740Z] Node Version:  v14.16.1
+[debug] [2021-05-14T02:05:05.742Z] Time:          Fri May 14 2021 11:05:05 GMT+0900 (대한민국 표준시)
+[debug] [2021-05-14T02:05:05.742Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2021-05-14T02:05:05.760Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2021-05-14T02:05:05.760Z] > authorizing via signed-in user (jaehyanggg@gmail.com)
+[debug] [2021-05-14T02:05:05.761Z] [iam] checking project jh-web-fb-board for permissions ["firebase.projects.get"]
+[debug] [2021-05-14T02:05:05.764Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/jh-web-fb-board:testIamPermissions  
+ {"permissions":["firebase.projects.get"]}
+[debug] [2021-05-14T02:05:06.631Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Fri, 14 May 2021 02:05:05 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","server-timing":"gfet4t7; dur=559","alt-svc":"h3-29=\":443\"; ma=2592000,h3-T051=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2021-05-14T02:05:06.636Z] > refreshing access token with scopes: []
+[debug] [2021-05-14T02:05:06.636Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+ <request body omitted>
+[debug] [2021-05-14T02:05:06.864Z] <<< HTTP RESPONSE 200 {"pragma":"no-cache","cache-control":"no-cache, no-store, max-age=0, must-revalidate","date":"Fri, 14 May 2021 02:05:05 GMT","expires":"Mon, 01 Jan 1990 00:00:00 GMT","content-type":"application/json; charset=utf-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","server":"scaffolding on HTTPServer2","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"h3-29=\":443\"; ma=2592000,h3-T051=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2021-05-14T02:05:06.886Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/jh-web-fb-board [none]
+[debug] [2021-05-14T02:05:07.384Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/jh-web-fb-board 200
+[debug] [2021-05-14T02:05:07.384Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/jh-web-fb-board {"projectId":"jh-web-fb-board","projectNumber":"477595147266","displayName":"jh-web-fb-board","name":"projects/jh-web-fb-board","resources":{"hostingSite":"jh-web-fb-board","realtimeDatabaseInstance":"jh-web-fb-board-default-rtdb","storageBucket":"jh-web-fb-board.appspot.com","locationId":"asia-northeast2"},"state":"ACTIVE"}
+[info] 
+[info] === Serving from 'C:\jaehyanggg\11.fb-board'...
+[info] 
+[debug] [2021-05-14T02:05:07.394Z] >>> [apiv2][query] GET https://firebasehosting.googleapis.com/v1beta1/projects/jh-web-fb-board/sites 
+[debug] [2021-05-14T02:05:08.374Z] <<< [apiv2][status] GET https://firebasehosting.googleapis.com/v1beta1/projects/jh-web-fb-board/sites 200
+[debug] [2021-05-14T02:05:08.374Z] <<< [apiv2][body] GET https://firebasehosting.googleapis.com/v1beta1/projects/jh-web-fb-board/sites {}
+[debug] [2021-05-14T02:05:08.381Z] Failed to list hosting sites
+[debug] 
+[debug] [2021-05-14T02:05:08.381Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/jh-web-fb-board/webApps/-/config [none]
+[debug] [2021-05-14T02:05:09.675Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/jh-web-fb-board/webApps/-/config 200
+[debug] [2021-05-14T02:05:09.675Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/jh-web-fb-board/webApps/-/config {"projectId":"jh-web-fb-board","databaseURL":"https://jh-web-fb-board-default-rtdb.firebaseio.com","storageBucket":"jh-web-fb-board.appspot.com","locationId":"asia-northeast2","apiKey":"AIzaSyAA2VFNgLNS3MsflWDLPDYdzZOqq61lnRY","authDomain":"jh-web-fb-board.firebaseapp.com","messagingSenderId":"477595147266"}
+[info] i  hosting: Serving hosting files from: public {"metadata":{"emulator":{"name":"hosting"},"message":"Serving hosting files from: \u001b[1mpublic\u001b[22m"}}
+[info] +  hosting: Local server: http://localhost:5000 {"metadata":{"emulator":{"name":"hosting"},"message":"Local server: \u001b[4m\u001b[1mhttp://localhost:5000\u001b[22m\u001b[24m"}}
+[info] i  hosting: 127.0.0.1 - - [14/May/2021:02:05:20 +0000] "GET / HTTP/1.1" 200 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.212 Safari/537.36" {"metadata":{"emulator":{"name":"hosting"},"message":"127.0.0.1 - - [14/May/2021:02:05:20 +0000] \"GET / HTTP/1.1\" 200 - \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.212 Safari/537.36\""}}
+[info] i  hosting: 127.0.0.1 - - [14/May/2021:02:05:20 +0000] "GET /favicon.ico HTTP/1.1" 200 - "http://localhost:5000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.212 Safari/537.36" {"metadata":{"emulator":{"name":"hosting"},"message":"127.0.0.1 - - [14/May/2021:02:05:20 +0000] \"GET /favicon.ico HTTP/1.1\" 200 - \"http://localhost:5000/\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.212 Safari/537.36\""}}
+[info] i  hosting: 127.0.0.1 - - [14/May/2021:02:10:45 +0000] "GET / HTTP/1.1" 200 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.212 Safari/537.36" {"metadata":{"emulator":{"name":"hosting"},"message":"127.0.0.1 - - [14/May/2021:02:10:45 +0000] \"GET / HTTP/1.1\" 200 - \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.212 Safari/537.36\""}}
+[info] i  hosting: 127.0.0.1 - - [14/May/2021:02:10:45 +0000] "GET /favicon.ico HTTP/1.1" 304 - "http://localhost:5000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.212 Safari/537.36" {"metadata":{"emulator":{"name":"hosting"},"message":"127.0.0.1 - - [14/May/2021:02:10:45 +0000] \"GET /favicon.ico HTTP/1.1\" 304 - \"http://localhost:5000/\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.212 Safari/537.36\""}}
