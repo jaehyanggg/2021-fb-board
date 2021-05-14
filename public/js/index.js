@@ -4,18 +4,36 @@ var googleAuth = new firebase.auth.GoogleAuthProvider();	// 구글로그인 모�
 var db = firebase.database(); //firebase의 database모듈을 불러온다.
 var user = null;
 
-/*************** 사용자 함수 *****************/
+var $tbody = $('.list-wrapper tbody');
 
+/*************** 사용자 함수 *****************/
+$tbody.empty();
 
 
 /*************** 이벤트 등록 *****************/
 auth.onAuthStateChanged(onChangeAuth);
+db.ref('root/board').on('child_added', onAdded);// database의 reference를 가져온 후 child 추가
 
 $('.bt-login').click(onLogin);
 $('.bt-logout').click(onLogOut);
 
 
 /*************** 이벤트 콜백 *****************/
+function onAdded(r) {
+	var k = r.key;
+	var v = r.val();
+	var i = $tbody.find('tr').length + 1;
+	var html = '';
+	html += '<tr id="'+k+'">';
+	html += '<td>'+i+'</td>';
+	html += '<td class="text-left">'+v.content+'</td>';
+	html += '<td>'+v.writer+'</td>';
+	html += '<td>'+moment(v.createdAt).format('YYYY-MM-DD')+'</td>';
+	html += '<td>'+v.readnum+'</td>';
+	html += '</tr>';
+	$tbody.prepend(html);
+}
+
 function onSubmit(f) {
 	if(f.writer.value.trim() === '') {
 		alert('작성자는 필수사항 입니다.');
