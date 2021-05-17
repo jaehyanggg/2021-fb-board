@@ -51,6 +51,7 @@ html, body {font-family: 'NanumBarunGothic', sans-serif;}
 .list-wrapper table > thead > tr > :nth-child(3) {width: 15%}
 .list-wrapper table > thead > tr > :nth-child(4) {width: 20%}
 .list-wrapper table > thead > tr > :nth-child(5) {width: 10%}
+.list-wrapper table > tbody .mask {display: none; margin-left: 2em; position: absolute; margin-top: -8px;}
 
 /********************** 반응형 설정 *********************/
 @media (max-width: 1399px) {
@@ -73,17 +74,16 @@ html, body {font-family: 'NanumBarunGothic', sans-serif;}
 	.header-wrapper .navi-wrap .navi.bt-login::after {content: '';}
 	.header-wrapper .navi-wrap .navi.bt-logout::after {content: '';}
 
-	.list-wrapper table > thead > tr > :nth-child(4) {display: none;}
-	.list-wrapper table > tbody > tr > :nth-child(4) {display: none;}
+	.list-wrapper table > thead > tr > :nth-child(1) {width: 15%;}
 	.list-wrapper table > thead > tr > :nth-child(3) {display: none;}
 	.list-wrapper table > tbody > tr > :nth-child(3) {display: none;}
+
+	.list-wrapper table > thead > tr > :nth-child(4) {display: none;}
+	.list-wrapper table > tbody > tr > :nth-child(4) {display: none;}
 }
 
 @media (max-width: 575px) {
 	.create-wrapper form > input {margin: .25em 0;}
 	.create-wrapper form > input[name='content'] {margin: 0 0 .5em 0;}
 	.create-wrapper form > .btn {margin: auto;}
-	
-	.list-wrapper table > thead > tr > :nth-child(1) {display: none;}
-	.list-wrapper table > tbody > tr > :nth-child(1) {display: none;}
 }
