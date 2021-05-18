@@ -1,3 +1,5 @@
+/*  참고 : https://firebase.google.com/docs/database/web/lists-of-data?authuser=0 */ 
+
 /*************** 글로벌 설정 *****************/
 var auth = firebase.auth();	//firebase의 auth(인증)모듈을 불러온다.
 var googleAuth = new firebase.auth.GoogleAuthProvider();	// 구글로그인 모듈을 불러온다.
@@ -5,18 +7,23 @@ var db = firebase.database(); //firebase의 database모듈을 불러온다.
 var ref = db.ref('root/board');
 var user = null;
 
+// paging
+var observer;
+var listCnt = 10;
+
 var $tbody = $('.list-wrapper tbody');
 var $form = $('.create-form');
 
 
 
 /*************** 사용자 함수 *****************/
+observer = new IntersectionObserver(onIntersection, { root: null });
 $tbody.empty();
 
 
 /*************** 이벤트 등록 *****************/
 auth.onAuthStateChanged(onChangeAuth);
-ref.on('child_added', onAdded);
+ref.limitToLast(10).on('child_added', onAdded);
 ref.on('child_removed', onRemoved);
 ref.on('child_changed', onChanged);
 
@@ -56,10 +63,20 @@ function onAdded(r) {
 	html += '<td class="readnum">'+v.readnum+'</td>';
 	html += '</tr>';
 	var $tr = $(html).prependTo($tbody);
+	observer.observe($tbody.find('tr:last-child')[0]);
 	$tr.mouseenter(onTrEnter)
 	$tr.mouseleave(onTrLeave);
 	$tr.find('.bt-chg').click(onChgClick);
 	$tr.find('.bt-rev').click(onRevClick);
+}
+
+function onIntersection(els, observer) {
+	els.forEach(function(v) {
+		if(v.isIntersecting) {
+			console.log('hi', v.target);
+			observer.unobserve(v.target);
+		}
+	})
 }
 
 function onChgClick() {
@@ -100,7 +117,6 @@ function onReset() {
 	$form.removeClass('active');
 }
 
-
 function onTrEnter() {
 	var uid = $(this).data('uid');
 	if(user && uid === user.uid) {
@@ -137,6 +153,7 @@ function onSubmit(f) {
 			data.createdAt = new Date().getTime();
 			data.readnum = 0;
 			data.uid = user.uid;
+			data.sort = -data.createdAt;
 			ref.push(data);
 		}
 		else {
@@ -157,7 +174,6 @@ function onSubmit(f) {
 
 	return false;
 }
-
 
 function onChangeAuth(r) {
 	user = r;

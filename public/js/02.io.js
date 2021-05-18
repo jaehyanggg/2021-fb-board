@@ -17,7 +17,7 @@ function createObserver() {
 		root: null,
 		rootMargin: "0px",
 		// threshold: buildThresholdList()
-		threshold: .5 // 여기서 조절
+		threshold: 0 // 여기서 조절
 	};
 
 	observer = new IntersectionObserver(onIntersection, options);
@@ -44,11 +44,15 @@ function onIntersection(el, observer) {
 		console.log(v.isIntersecting);
 		if (v.isIntersecting) {
 			v.target.style.backgroundColor = increasingColor.replace("ratio", 1);
+			observer.unobserve(v.target);
 			// v.target.style.backgroundColor = increasingColor.replace("ratio", v.intersectionRatio);
-		} else {
-			v.target.style.backgroundColor = decreasingColor.replace("ratio", 1);
+		} 
+		/* 
+		else  {
+			// v.target.style.backgroundColor = decreasingColor.replace("ratio", 1);
 			// v.target.style.backgroundColor = decreasingColor.replace("ratio", v.intersectionRatio);
 		}
+		*/
 
 		prevRatio = v.intersectionRatio;
 	});
