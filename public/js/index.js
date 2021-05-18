@@ -2,14 +2,15 @@
 
 /*************** 글로벌 설정 *****************/
 var auth = firebase.auth();	//firebase의 auth(인증)모듈을 불러온다.
-var googleAuth = new firebase.auth.GoogleAuthProvider();	// 구글로그인 모듈을 불러온다.
+var googleAuth = new firebase.auth.GoogleAuthProvider(); //구글로그인 모듈을 불러온다.
 var db = firebase.database(); //firebase의 database모듈을 불러온다.
 var ref = db.ref('root/board');
 var user = null;
 
 // paging
 var observer;
-var listCnt = 10;
+var listCnt = 5;
+
 
 var $tbody = $('.list-wrapper tbody');
 var $form = $('.create-form');
@@ -17,19 +18,51 @@ var $form = $('.create-form');
 
 
 /*************** 사용자 함수 *****************/
+function genHTML(k, v, method) {
+	var html = '';
+	html += '<tr class="id" id="'+k+'" data-uid="'+v.uid+'" data-sort="'+v.sort+'">';
+	html += '<td>&nbsp;';
+	html += '</td>';
+	html += '<td class="content text-left"><span>'+v.content+'</span>';
+	html += '<div class="btn-group mask">';
+	html += '<button class="bt-chg btn btn-sm btn-info"><i class="fa fa-edit"></i></button>';
+	html += '<button class="bt-rev btn btn-sm btn-info"><i class="fa fa-trash-alt"></i></button>';
+	html += '</div>';
+	html += '</td>';
+	html += '<td class="writer">'+v.writer+'</td>';
+	html += '<td class="date">'+moment(v.createdAt).format('YYYY-MM-DD')+'</td>';
+	html += '<td class="readnum">'+v.readnum+'</td>';
+	html += '</tr>';
+	var $tr = (method && method == 'append') ? $(html).appendTo($tbody) : $(html).prependTo($tbody);
+
+	var num = $tbody.find('tr').length;
+	$tbody.find('tr').each(function(i) {
+		$(this).find('td:first-child').text(num--);
+	});
+
+	setTimeout(function(){ $tr.addClass('active'); }, 100);
+	$tr.mouseenter(onTrEnter);
+	$tr.mouseleave(onTrLeave);
+	$tr.find('.bt-chg').click(onChgClick);
+	$tr.find('.bt-rev').click(onRevClick);
+	return $tr;
+}
+
+
 observer = new IntersectionObserver(onIntersection, { root: null });
 $tbody.empty();
 
 
 /*************** 이벤트 등록 *****************/
 auth.onAuthStateChanged(onChangeAuth);
-ref.limitToLast(10).on('child_added', onAdded);
+ref.limitToLast(listCnt).on('child_added', onAdded);
 ref.on('child_removed', onRemoved);
 ref.on('child_changed', onChanged);
 
-$('.bt-login').click(onLogin);
+$('.bt-login').click(onLoginGoogle);
 $('.bt-logout').click(onLogOut);
 $form.find('.bt-cancel').click(onReset);
+// $(window).resize(onResize);
 
 
 /*************** 이벤트 콜백 *****************/
@@ -47,34 +80,21 @@ function onChanged(r) {
 function onAdded(r) {
 	var k = r.key;
 	var v = r.val();
-	var i = $tbody.find('tr').length + 1;
-	var html = '';
-	html += '<tr class="id" id="'+k+'" data-uid="'+v.uid+'">';
-	html += '<td>'+i;
-	html += '</td>';
-	html += '<td class="content text-left"><span>'+v.content+'</span>';
-	html += '<div class="btn-group mask">';
-	html += '<button class="bt-chg btn btn-sm btn-info"><i class="fa fa-edit"></i></button>';
-	html += '<button class="bt-rev btn btn-sm btn-info"><i class="fa fa-trash-alt"></i></button>';
-	html += '</div>';
-	html += '</td>';
-	html += '<td class="writer">'+v.writer+'</td>';
-	html += '<td class="date">'+moment(v.createdAt).format('YYYY-MM-DD')+'</td>';
-	html += '<td class="readnum">'+v.readnum+'</td>';
-	html += '</tr>';
-	var $tr = $(html).prependTo($tbody);
+	var $tr = genHTML(k, v);
 	observer.observe($tbody.find('tr:last-child')[0]);
-	$tr.mouseenter(onTrEnter)
-	$tr.mouseleave(onTrLeave);
-	$tr.find('.bt-chg').click(onChgClick);
-	$tr.find('.bt-rev').click(onRevClick);
 }
 
 function onIntersection(els, observer) {
 	els.forEach(function(v) {
 		if(v.isIntersecting) {
-			console.log('hi', v.target);
 			observer.unobserve(v.target);
+			var key = $tbody.find('tr:last-child').data('sort');
+			ref.orderByChild('sort').startAfter(key).limitToFirst(listCnt).get().then(function(r) {
+				r.forEach(function(v) {
+					genHTML(v.key, v.val(), 'append');
+				});
+				observer.observe($tbody.find('tr:last-child')[0]);
+			});
 		}
 	})
 }
@@ -146,7 +166,7 @@ function onSubmit(f) {
 		return false;
 	}
 
-	
+
 	var data = { writer: f.writer.value, content: f.content.value }
 	if(user && user.uid) {
 		if(f.key.value === '') {
@@ -163,7 +183,7 @@ function onSubmit(f) {
 	}
 	else alert('정상적인 접근이 아닙니다.');
 
-	/* 디자인 */
+
 	$(f).removeClass('active');
 	f.key.value = '';
 	f.writer.value = user.displayName;
@@ -177,6 +197,7 @@ function onSubmit(f) {
 
 function onChangeAuth(r) {
 	user = r;
+	console.log(user);
 	if(user) {
 		$('.header-wrapper .email').text(user.email);
 		$('.header-wrapper .photo img').attr('src', user.photoURL);
@@ -201,7 +222,11 @@ function onLogOut() {
 	auth.signOut();
 }
 
-function onLogin() {
+function onLoginGoogle() {
 	auth.signInWithPopup(googleAuth);
 }
+
+
+
+
 
