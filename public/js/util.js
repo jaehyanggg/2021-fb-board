@@ -8,6 +8,7 @@
 var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 var isIE11 = !!window.MSInputMethodContext && !!document.documentMode;
 
+
 /****************** regExp ********************/
 // Email 정규표현식
 function validEmail(v) {
@@ -177,4 +178,16 @@ function getSwiper(el, opt) {
 function cloneObject(obj) {
 	// var props = {...slick}; // ES6 DeepCopy
 	return JSON.parse(JSON.stringify(obj));
+}
+
+
+/*************** getLocation promise version *****************/
+function getGeo() {
+	return new Promise(function(resolve, reject) {
+		navigator.geolocation.getCurrentPosition(function(r) {
+			resolve({ lat: r.coords.latitude, lon: r.coords.longitude });
+		}, function(err) {
+			reject(err);
+		});
+	});
 }
