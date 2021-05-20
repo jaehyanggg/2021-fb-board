@@ -9,12 +9,11 @@ var user = null;
 
 // paging
 var observer;
-var listCnt = 10;
+var listCnt = 3;
 
 
 var $tbody = $('.list-wrapper tbody');
 var $form = $('.create-form');
-
 
 
 /*************** 사용자 함수 *****************/
@@ -55,7 +54,8 @@ $tbody.empty();
 
 /*************** 이벤트 등록 *****************/
 auth.onAuthStateChanged(onChangeAuth);
-ref.limitToLast(listCnt).on('child_added', onAdded);
+// ref.limitToLast(listCnt).on('child_added', onAdded);
+ref.limitToLast(listCnt).once('value').then(onGetFirst).catch(onError);
 ref.on('child_removed', onRemoved);
 ref.on('child_changed', onChanged);
 
@@ -67,6 +67,17 @@ $form.find('.bt-cancel').click(onReset);
 
 
 /*************** 이벤트 콜백 *****************/
+function onGetFirst(r) {
+	r.forEach(function(v) {
+		genHTML(v.key, v.val());
+		observer.observe($tbody.find('tr:last-child')[0]);
+	});
+}
+
+function onError(err) {
+	console.log(err);
+}
+
 function onRemoved(r) {
 	$('#'+r.key).remove();
 }
@@ -176,7 +187,8 @@ function onSubmit(f) {
 			data.readnum = 0;
 			data.uid = user.uid;
 			data.sort = -data.createdAt;
-			ref.push(data);
+			var insertData = ref.push(data);
+			genHTML(insertData.key, data);
 		}
 		else {
 			data.updatedAt = new Date().getTime();
@@ -185,7 +197,6 @@ function onSubmit(f) {
 	}
 	else alert('정상적인 접근이 아닙니다.');
 
-	
 	$(f).removeClass('active');
 	f.key.value = '';
 	f.writer.value = user.displayName;
@@ -226,9 +237,6 @@ function onLogOut() {
 function onLoginGoogle() {
 	auth.signInWithPopup(googleAuth);
 }
-
-
-
 
 
 
