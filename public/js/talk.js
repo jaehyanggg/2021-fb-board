@@ -108,6 +108,11 @@ function onSubmit(f) {
 	return false;
 }
 
+function onChatOut() {
+	$('.room-wrapper').css('display', 'flex');
+	$('.chat-wrapper').css('display', 'none');
+}
+
 /******************** room ***********************/
 function onRoomSubmit(f) {
 	if(f.name.value.trim() === '') {
@@ -152,9 +157,11 @@ function onRoomEnter(f) {
 		if(r.val().roompw !== '') { // 비공개방
 			if(r.val().roompw === f.roompw.value.trim()) { // 패스워드 일치
 				showTalk(r.val().rid);
+				f.roompw.value = '';
 			}
 			else { // 패스위드 불일치
 				alert('패스워드가 일치하지 않습니다.');
+				f.roompw.value = '';
 				f.roompw.focus();
 			}
 		}
@@ -162,8 +169,11 @@ function onRoomEnter(f) {
 			showTalk(r.val().rid);
 		}
 	})
-	.catch(function(err) { console.log(err) });
-
+	.catch(function(err) { 
+		f.roompw.value = '';
+		console.log(err) 
+	});
+	
 	return false;
 }
 
@@ -174,6 +184,8 @@ function onRoomAdded(v) {
 function onRoomChanged(v) {
 	var html = $(genRoom(v.key, v.val(), true)).html();
 	$('#'+v.key).html(html);
+	$('#'+v.key).removeClass('secure');
+	if(v.val().roompw != '') $('#'+v.key).addClass('secure');
 }
 
 function onRoomRemoved(v) {
