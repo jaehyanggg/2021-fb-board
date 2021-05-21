@@ -57,6 +57,8 @@ function onLoginGoogle() {
 /*************** firebase event *****************/
 talkRef.on('child_added', onTalkAdded);
 roomRef.on('child_added', onRoomAdded);
+roomRef.on('child_changed', onRoomChanged);
+roomRef.on('child_removed', onRoomRemoved);
 
 
 
@@ -123,18 +125,21 @@ function onRoomSubmit(f) {
 		f.writer.focus();
 		return false;
 	}
-	var data = {
-		rid: uuidv4(),
-		uid: user.uid,
-		name: f.name.value,
-		writer: f.writer.value,
-		roompw: f.roompw.value,
-		createdAt: new Date().getTime(),
+	var data = { name: f.name.value, writer: f.writer.value, roompw: f.roompw.value }
+	if(f.key && f.key.value) { // 수정
+		data.updatedAt = new Date().getTime();
+		if(f.roompw.value.trim() !== '') data.roompw.value = f.roompw.value;
+		roomRef.child(f.key.value).update(data);
+		alert('방 정보가 변경되었습니다.');
 	}
-	roomRef.push(data);
-	f.name.value = '';
-	f.writer.value = '';
-	f.roompw.value = '';
+	else { // 신규등록
+		data.rid = uuidv4();
+		data.uid = user.uid;
+		data.createdAt = new Date().getTime();
+		roomRef.push(data);
+		f.name.value = '';
+		f.roompw.value = '';
+	}
 	return false;
 }
 
@@ -142,11 +147,21 @@ function onRoomAdded(v) {
 	genRoom(v.key, v.val());
 }
 
-function genRoom(k, v) {
+function onRoomChanged(v) {
+	var html = $(genRoom(v.key, v.val(), true)).html();
+	$('#'+v.key).html(html);
+}
+
+function onRoomRemoved(v) {
+
+}
+
+function genRoom(k, v, isChange) {
 	var html = '';
-	html += '<div class="room-wrap">';
+	html += '<div class="room-wrap '+(v.roompw !== '' ? 'secure' : '')+'" id="'+k+'">';
 	if(user.uid === v.uid) {
 			html += '<form class="create" onsubmit="return onRoomSubmit(this);">';
+			html += '<input type="hidden" name="key" value="'+k+'">';
 			html += '<div class="name">';
 			html += '<input type="text" class="form-control" name="name" placeholder="방제목" value="'+v.name+'">';
 			html += '</div>';
@@ -154,15 +169,15 @@ function genRoom(k, v) {
 			html += '<input type="text" class="form-control" name="writer" placeholder="방장이름" value="'+v.writer+'">';
 			html += '<input type="password" class="form-control" name="roompw" placeholder="비밀번호">';
 			html += '<div class="text-danger">';
-			html += '* 비밀번호 입력시 비밀방이 됩니다<br>';
-			html += '* 미 입력시 오픈채팅방';
+			html += '* 비밀번호 입력시 비밀번호가 수정됩니다.<br>';
+			html += '* 미 입력시 오픈채팅으로 변경됩니다.';
 			html += '</div>';
 			html += '</div>';
 			html += '<div class="btn-wrap">';
 			html += '<button class="btn btn-sm btn-success">';
 			html += '<i class="bt-update fa fa-save"></i> 수정';
 			html += '</button> ';
-			html += '<button class="btn btn-sm btn-danger">';
+			html += '<button type="button" class="btn btn-sm btn-danger">';
 			html += '<i class="bt-update fa fa-times"></i> 삭제';
 			html += '</button>';
 			html += '</div>';
@@ -173,11 +188,13 @@ function genRoom(k, v) {
 		html += '<h4 class="writer">'+v.writer+'</h4>';
 		html += '<div class="date mb-4">개설: '+moment(v.createdAt).format('YYYY-MM-DD')+'</div>';
 	}
-	html += '<div class="enter-wrap form-inline">';
+	html += '<form class="enter-wrap form-inline">';
 	if(v.roompw) 
 		html += '<input type="password" name="roompw" class="form-control" placeholder="비밀번호">&nbsp;';
-	html += '<button type="button" class="btn btn-primary">방 입장</button>';
-	html += '<div>';
+	html += '<input type="hidden" name="rid" value="'+v.rid+'" onsubmit="return onRoomEnter(this);">';
+	html += '<button class="btn btn-primary">방 입장</button>';
+	html += '</form>';
 	html += '</div>';
-	$('.room-wrap.create').after(html);
+	if(isChange) return html;
+	else $('.room-wrap.create').after(html);
 }
