@@ -42,11 +42,11 @@ html, body {font-family: 'NanumBarunGothic', sans-serif;}
 
 
 /********************** chat-wrapper *********************/
-.chat-wrapper {display: none; flex-direction: column; justify-content: stretch; align-items: center; flex-grow: 1; width: 100%; border: 1px solid red;}
+.chat-wrapper {display: none; flex-direction: column; justify-content: stretch; align-items: center; flex-grow: 1; width: 100%;}
 
 
 /********************** create-wrapper *********************/
-.chat-wrapper .create-wrapper {padding: .5em 0; display: flex; width: 96%;}
+.chat-wrapper .create-wrapper {padding: .5em 0; width: 96%;}
 .chat-wrapper .create-wrapper form {display: flex; align-items: center; flex-wrap: nowrap;}
 .chat-wrapper .create-wrapper .icon {border-radius: 50%; overflow: hidden; width: 36px; height: 36px; border: 1px solid #eee; flex-shrink: 0;} 
 .chat-wrapper .create-wrapper form > input[name='content'] {flex-grow: 1; margin: .5em; min-width: 30%;}
@@ -56,7 +56,7 @@ html, body {font-family: 'NanumBarunGothic', sans-serif;}
 
 
 /********************** list-wrapper *********************/
-.chat-wrapper .list-wrapper {flex-grow: 1; width: 96%; border: 2px solid #333; background-color: #f5e9f3; border-radius: 8px; padding: .5em; display: flex; overflow-y: auto;}
+.chat-wrapper .list-wrapper {flex-grow: 1; width: 96%; border: 2px solid #333; background-color: #f5e9f3; border-radius: 8px; padding: .5em; overflow-y: auto;}
 .chat-wrapper .list-wrapper .line {display: flex; align-items: center; margin: 2em 0; color: #555;}
 .chat-wrapper .list-wrapper .line > span {padding: 0 .5em;}
 .chat-wrapper .list-wrapper .line::before {display: block; content: ''; height: 2px; background-color: #999; flex-grow: 1;}
@@ -87,7 +87,7 @@ html, body {font-family: 'NanumBarunGothic', sans-serif;}
 
 
 /********************** room-wrapper *********************/
-.room-wrapper {display: none; flex-grow: 1; width: 100%; border: 1px solid red; padding: 1em; align-items: stretch; flex-wrap: wrap; align-content: flex-start; overflow-y: auto;}
+.room-wrapper {display: none; flex-grow: 1; width: 100%; padding: 1em; align-items: stretch; flex-wrap: wrap; align-content: flex-start; overflow-y: auto;}
 .room-wrapper ::placeholder {color: #ddd;}
 .room-wrapper .room-wrap {width: 23%; margin: 1%; padding: 1em; border: 3px solid pink; background-color: #fdebee; border-radius: 10px;}
 .room-wrapper .room-wrap h3.title {text-align: center; margin: .325em 0 .75em 0; font-size: 1.325em; font-weight: bold; color:#5c2452;}
@@ -109,7 +109,7 @@ html, body {font-family: 'NanumBarunGothic', sans-serif;}
 
 
 /********************** login-wrapper *********************/
-.login-wrapper {display: flex; flex-direction: column; justify-content: center; align-items: center; flex-grow: 1; width: 100%; border: 1px solid red;}
+.login-wrapper {display: flex; flex-direction: column; justify-content: center; align-items: center; flex-grow: 1; width: 100%;}
 .login-wrapper > .bt-login {align-items: center;}
 .login-wrapper > .bt-login > i {margin-right: .5em;}
 .login-wrapper > div {padding: 1em 0 3em 0;}
