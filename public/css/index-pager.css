@@ -48,7 +48,6 @@ html, body {font-family: 'NanumBarunGothic', sans-serif;}
 
 
 /********************** list-wrapper *********************/
-.list-wrapper {}
 .list-wrapper table {margin-bottom: 2em;}
 .list-wrapper table > thead > tr > :nth-child(1) {width: 10%}
 .list-wrapper table > thead > tr > :nth-child(3) {width: 15%}
@@ -74,7 +73,7 @@ html, body {font-family: 'NanumBarunGothic', sans-serif;}
 }
 
 @media (max-width: 767px) {
-	.header-wrapper .logo::after {content: 'FBB'; letter-spacing: -2px;}
+	.header-wrapper .logo::after {content: 'FB BOARD'; letter-spacing: -2px;}
 	.header-wrapper .email {display: none;}
 	.header-wrapper .navi-wrap .bt-login::after {content: '';}
 	.header-wrapper .navi-wrap .bt-logout::after {content: '';}
