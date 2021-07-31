@@ -74,7 +74,7 @@ html, body {font-family: 'NanumBarunGothic', sans-serif;}
 }
 
 @media (max-width: 767px) {
-	.header-wrapper .logo::after {content: 'FB BOARD'; letter-spacing: -2px;}
+	.header-wrapper .logo::after {content: 'FBB'; letter-spacing: -2px;}
 	.header-wrapper .email {display: none;}
 	.header-wrapper .navi-wrap .bt-login::after {content: '';}
 	.header-wrapper .navi-wrap .bt-logout::after {content: '';}
